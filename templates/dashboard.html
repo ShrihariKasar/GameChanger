@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4">Gaming Dashboard</h2>
+
+    <div class="card shadow p-4 mb-4">
+        <h4 class="text-primary">Welcome, {{ current_user.username }}!</h4>
+        <p class="lead">Track your gaming habits responsibly and manage your logs with ease.</p>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+
+    <div class="card shadow p-4 mb-4">
+        <h3>Your Gaming Logs</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Game Name</th>
+                        <th>Hours Played</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in game_logs %}
+                    <tr>
+                        <td>{{ log.game_name }}</td>
+                        <td>{{ log.play_hours }}</td>
+                        <td>{{ log.play_date }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_log', log_id=log.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{{ url_for('delete_log', log_id=log.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">No game logs available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card shadow p-4">
+        <h3>Add New Game Log</h3>
+        <form method="POST" class="mt-3">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group mb-3">
+                {{ form.game_name.label(class="form-label") }}
+                {{ form.game_name(class="form-control", placeholder="Enter game name") }}
+            </div>
+            <div class="form-group mb-3">
+                {{ form.play_hours.label(class="form-label") }}
+                {{ form.play_hours(class="form-control", placeholder="Enter hours played") }}
+            </div>
+            <div class="form-group mb-3">
+                {{ form.play_date.label(class="form-label") }}
+                {{ form.play_date(class="form-control") }}
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block">Add Log</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
