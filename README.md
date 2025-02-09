@@ -23,7 +23,7 @@ A secure and user-friendly Flask-based gaming application with features like use
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/flask-gaming-app.git
+   git clone https://github.com/ShrihariKasar/flask-gaming-app.git
    cd flask-gaming-app
    ```
 
